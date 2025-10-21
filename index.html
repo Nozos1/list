@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pergaminowy list z animacją i lektorem</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <div class="scroll">
+      <div id="text" class="text"></div>
+    </div>
+
+    <div class="controls">
+      <button id="play">▶︎ Start</button>
+      <button id="pause" disabled>⏸︎ Pauza</button>
+      <button id="reset">⟲ Restart</button>
+      <label>Głos <select id="voiceSel"></select></label>
+      <label>Prędkość <input id="rate" type="range" min="0.6" max="1.4" step="0.05" value="1"></label>
+    </div>
+  </div>
+
+<script>
+/* ====== Treść listu ====== */
+const LETTER_TEXT = `Drogi Przyjacielu,
+
+Piszę ten list, by przypomnieć Ci o sile spokoju.
+W świecie pełnym pośpiechu to właśnie cisza daje najwięcej odpowiedzi.
+
+Niech ten pergamin przypomina, że czasem warto zatrzymać się,
+odetchnąć i po prostu być.
+
+Z wyrazami szacunku,
+Autor`;
+
+/* ====== DOM ====== */
+const elText = document.getElementById('text');
+const btnPlay = document.getElementById('play');
+const btnPause = document.getElementById('pause');
+const btnReset = document.getElementById('reset');
+const elVoice = document.getElementById('voiceSel');
+const elRate = document.getElementById('rate');
+
+let typingTimer=null,isTyping=false,paused=false,typedIndex=0;
+const TYPE_INTERVAL=30;
+
+/* ====== Efekt pisania ====== */
+function typeNextChar(){
+  if(paused)return;
+  if(typedIndex<=LETTER_TEXT.length){
+    elText.textContent=LETTER_TEXT.slice(0,typedIndex);
+    typedIndex++;
+    typingTimer=setTimeout(typeNextChar,TYPE_INTERVAL);
+  }else{
+    elText.classList.add('caret-off');
+    isTyping=false;
+  }
+}
+
+/* ====== Lektor ====== */
+const supportsTTS='speechSynthesis'in window&&'SpeechSynthesisUtterance'in window;
+let voices=[]; let currentUtterance=null;
+
+function populateVoices(){
+  if(!supportsTTS)return;
+  voices=window.speechSynthesis.getVoices();
+  const pl=voices.filter(v=>(v.lang||'').toLowerCase().startsWith('pl'));
+  const rest=voices.filter(v=>!(v.lang||'').toLowerCase().startsWith('pl'));
+  const sorted=[...pl,...rest];
+  elVoice.innerHTML='';
+  sorted.forEach(v=>{
+    const o=document.createElement('option');
+    o.value=v.name;
+    o.textContent=`${v.name} ${v.lang?'· '+v.lang:''}${pl.includes(v)?' (PL)':''}`;
+    elVoice.appendChild(o);
+  });
+  const pref=sorted.find(v=>(v.lang||'').toLowerCase().startsWith('pl'));
+  if(pref)elVoice.value=pref.name;
+}
+if(supportsTTS){
+  populateVoices();
+  window.speechSynthesis.onvoiceschanged=populateVoices;
+}
+
+function speakText(){
+  if(!supportsTTS)return;
+  window.speechSynthesis.cancel();
+  currentUtterance=new SpeechSynthesisUtterance(LETTER_TEXT);
+  currentUtterance.rate=parseFloat(elRate.value||'1');
+  const v=voices.find(v=>v.name===elVoice.value)||
+           voices.find(v=>(v.lang||'').toLowerCase().startsWith('pl'))||
+           voices[0];
+  if(v)currentUtterance.voice=v;
+  window.speechSynthesis.speak(currentUtterance);
+}
+
+/* ====== Sekwencja ====== */
+function startSequence(){
+  resetAll();
+  setTimeout(()=>{
+    elText.style.opacity='1';
+    typeNextChar();
+    speakText();
+  }, 2000); // start po rozwinięciu pergaminu
+  btnPlay.disabled=true;
+  btnPause.disabled=false;
+}
+
+function pauseAll(){
+  paused=true;
+  if(typingTimer)clearTimeout(typingTimer);
+  if(supportsTTS)window.speechSynthesis.pause();
+  btnPause.disabled=true;btnPlay.disabled=false;btnPlay.textContent='▶︎ Wznów';
+}
+function resumeAll(){
+  paused=false;
+  typeNextChar();
+  if(supportsTTS)window.speechSynthesis.resume();
+  btnPause.disabled=false;btnPlay.disabled=true;btnPlay.textContent='▶︎ Start';
+}
+function resetAll(){
+  if(typingTimer)clearTimeout(typingTimer);
+  elText.textContent=''; elText.classList.remove('caret-off');
+  elText.style.opacity='0';
+  if(supportsTTS)window.speechSynthesis.cancel();
+  typedIndex=0;paused=false;btnPlay.disabled=false;btnPause.disabled=true;
+}
+
+/* ====== Eventy ====== */
+btnPlay.addEventListener('click',()=>paused?resumeAll():startSequence());
+btnPause.addEventListener('click',pauseAll);
+btnReset.addEventListener('click',resetAll);
+elRate.addEventListener('input',()=>{if(currentUtterance){window.speechSynthesis.cancel();speakText();}});
+elVoice.addEventListener('change',()=>{if(supportsTTS&&window.speechSynthesis.speaking&&!paused)speakText();});
+</script>
+
+</body>
+</html>

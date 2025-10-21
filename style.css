@@ -1,0 +1,121 @@
+/* === Styl responsywny pergaminu z animacją === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: 'Georgia', serif;
+  color: #2a1b0f;
+}
+
+/* Główne centrum */
+.container {
+  position: relative;
+  width: min(90vw, 900px);
+  aspect-ratio: 3/4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Pergamin */
+.scroll {
+  position: absolute;
+  width: 100%;
+  height: 0%;
+  background: url('parchment.png') center/cover no-repeat;
+  animation: unroll 2s ease-out forwards;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+@keyframes unroll {
+  0% { height: 0%; }
+  80% { height: 105%; }
+  100% { height: 100%; }
+}
+
+/* Tekst */
+.text {
+  position: absolute;
+  padding: 5vw;
+  font-size: clamp(16px, 2vw, 22px);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  opacity: 0;
+  border-right: 2px solid rgba(42, 27, 15, 0.8);
+  max-height: 90%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.text::-webkit-scrollbar {
+  width: 6px;
+}
+.text::-webkit-scrollbar-thumb {
+  background: rgba(42, 27, 15, 0.3);
+  border-radius: 10px;
+}
+
+.caret-off {
+  border-right-color: transparent;
+}
+
+/* Panel sterowania */
+.controls {
+  position: absolute;
+  bottom: 2%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 8px 16px;
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+  justify-content: center;
+}
+
+button, select, input[type="range"] {
+  border: 1px solid #8e7a5a;
+  background: #f6f0e5;
+  color: #2a1b0f;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* === Responsywność === */
+@media (max-width: 600px) {
+  .container {
+    width: 95vw;
+    aspect-ratio: 3/5;
+  }
+  .controls {
+    bottom: 4%;
+    flex-direction: column;
+    align-items: center;
+  }
+  .text {
+    font-size: clamp(14px, 3.5vw, 18px);
+    padding: 6vw;
+  }
+}
