@@ -1,4 +1,4 @@
-/* === Styl responsywny pergaminu z animacją === */
+/* === Styl pergaminu z rozwijaniem === */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,82 +6,105 @@
 }
 
 body {
-  background: #ffffff;
+  background: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
   overflow: hidden;
   font-family: 'Georgia', serif;
   color: #2a1b0f;
 }
 
-/* Główne centrum */
-.container {
+/* --- Zwinięty pergamin --- */
+#scroll-wrapper {
   position: relative;
-  width: min(90vw, 900px);
-  aspect-ratio: 3/4;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 90vw;
+  max-width: 900px;
+  animation: appear 1s ease-in;
 }
 
-/* Pergamin */
-.scroll {
-  position: absolute;
+#rolled {
   width: 100%;
-  height: 0%;
-  background: url('parchment.png') center/cover no-repeat;
-  animation: unroll 2s ease-out forwards;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
+  max-width: 900px;
+  transform: rotate(90deg);
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+}
+
+#start-btn {
+  position: absolute;
+  background: radial-gradient(circle, #a00 30%, #700 80%);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 90px;
+  height: 90px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* --- Rozwinięty pergamin --- */
+.hidden { display: none; }
+
+#open-scroll {
+  position: relative;
+  width: min(90vw, 900px);
+  max-width: 900px;
+  animation: fadeIn 1s forwards;
+}
+
+.scroll {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background: url('pergamin.png') center/cover no-repeat;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  border-radius: 10px;
   overflow: hidden;
+  animation: unroll 1.8s ease-out forwards;
 }
 
 @keyframes unroll {
-  0% { height: 0%; }
-  80% { height: 105%; }
-  100% { height: 100%; }
+  0% { transform: scaleY(0); opacity: 0; }
+  100% { transform: scaleY(1); opacity: 1; }
 }
 
-/* Tekst */
 .text {
-  position: absolute;
-  padding: 5vw;
+  padding: 40px;
   font-size: clamp(16px, 2vw, 22px);
   line-height: 1.7;
   white-space: pre-wrap;
   opacity: 0;
-  border-right: 2px solid rgba(42, 27, 15, 0.8);
-  max-height: 90%;
-  overflow-y: auto;
-  scrollbar-width: thin;
-}
-
-.text::-webkit-scrollbar {
-  width: 6px;
-}
-.text::-webkit-scrollbar-thumb {
-  background: rgba(42, 27, 15, 0.3);
-  border-radius: 10px;
+  border-right: 2px solid rgba(42,27,15,0.8);
+  transition: opacity 0.8s ease;
 }
 
 .caret-off {
   border-right-color: transparent;
 }
 
-/* Panel sterowania */
+/* --- Panel kontrolny --- */
 .controls {
-  position: absolute;
-  bottom: 2%;
+  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 8px 16px;
-  border-radius: 10px;
-  backdrop-filter: blur(6px);
   justify-content: center;
+  background: rgba(255,255,255,0.8);
+  padding: 10px 16px;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
 }
 
 button, select, input[type="range"] {
@@ -98,24 +121,19 @@ button:hover {
   transform: translateY(-1px);
 }
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+/* Animacje pomocnicze */
+@keyframes appear {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* === Responsywność === */
+/* Responsywność */
 @media (max-width: 600px) {
-  .container {
-    width: 95vw;
-    aspect-ratio: 3/5;
-  }
-  .controls {
-    bottom: 4%;
-    flex-direction: column;
-    align-items: center;
-  }
-  .text {
-    font-size: clamp(14px, 3.5vw, 18px);
-    padding: 6vw;
-  }
+  #rolled { transform: rotate(90deg) scale(1.2); }
+  #start-btn { width: 70px; height: 70px; font-size: 1rem; }
+  .text { padding: 25px; font-size: clamp(14px, 3.2vw, 18px); }
 }
