@@ -1,4 +1,4 @@
-/* === Pergaminowy list – wersja z background cover (pełna responsywność) === */
+/* === Pergaminowy list – finalna wersja === */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -16,12 +16,11 @@ body {
   overflow: hidden;
 }
 
-/* === Etap 1: Zwinięty pergamin jako tło === */
+/* === Zwinięty pergamin jako tło === */
 #scroll-wrapper {
   position: relative;
-  width: 90vw;
-  max-width: 900px;
-  aspect-ratio: 16/9; /* utrzymuje proporcje */
+  width: min(90vw, 900px);
+  aspect-ratio: 3 / 1.3;
   margin: auto;
   background-image: url('pngegg.png');
   background-size: contain;
@@ -32,7 +31,7 @@ body {
   align-items: center;
 }
 
-/* Przycisk Start */
+/* === Przycisk Start – automatyczne dopasowanie === */
 #start-btn {
   position: absolute;
   background: radial-gradient(circle, #b30000 30%, #700 80%);
@@ -42,49 +41,62 @@ body {
   font-size: clamp(0.9rem, 3.2vw, 1.2rem);
   font-weight: bold;
   cursor: pointer;
-  width: clamp(45px, 14vw, 70px);
-  height: clamp(45px, 14vw, 70px);
-  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  width: clamp(45px, 12vw, 70px);
+  height: clamp(45px, 12vw, 70px);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   animation: pulse 1.5s infinite;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
   z-index: 10;
-  top: 50%;
-  left: 57%;
+
+  /* Pozycja pieczęci proporcjonalna do szerokości i wysokości */
+  top: 52%;
+  left: 55%;
   transform: translate(-50%, -50%);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
 }
 
+/* delikatny efekt kliknięcia */
 #start-btn:active {
   transform: translate(-50%, -50%) scale(0.95);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-
+/* Efekt pulsowania */
 @keyframes pulse {
   0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.1); }
+  50% { transform: translate(-50%, -50%) scale(1.08); }
 }
 
-/* === Etap 2: Rozwinięty pergamin === */
+/* === Pergamin rozwinięty === */
 .hidden {
   display: none !important;
 }
 
 #open-scroll {
+  display: none;
   position: relative;
-  width: 90vw;
-  max-width: 900px;
-  animation: fadeIn 1s forwards;
+  width: 100vw;
+  height: 100vh;
+  background: #fff url('pergamin.png') center/contain no-repeat;
+  background-color: #fef9f3;
+  animation: fadeIn 1s ease forwards;
+}
+
+#open-scroll.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .scroll {
   position: relative;
-  width: 100%;
+  width: 90vw;
+  max-width: 900px;
+  aspect-ratio: 3/4;
   background: url('pergamin.png') center/cover no-repeat;
   border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  animation: unroll 1.6s ease-out forwards;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  animation: unroll 1.4s ease-out forwards;
 }
 
 @keyframes unroll {
@@ -92,7 +104,7 @@ body {
   100% { transform: scaleY(1); opacity: 1; }
 }
 
-/* === Tekst na pergaminie === */
+/* === Tekst listu === */
 .text {
   padding: clamp(20px, 6vw, 50px);
   font-size: clamp(14px, 2.2vw, 20px);
@@ -117,7 +129,7 @@ body {
   border-right-color: transparent;
 }
 
-/* === Panel kontrolny (lektor) === */
+/* === Panel sterowania (lektor, pauza itd.) === */
 .controls {
   margin-top: 10px;
   display: flex;
@@ -150,21 +162,28 @@ button:hover {
   to { opacity: 1; }
 }
 
-/* === Dodatkowa responsywność === */
+/* === Dodatkowa responsywność dla telefonów === */
 @media (max-width: 768px) {
   #scroll-wrapper {
-    width: 100vw;
-    aspect-ratio: 3/4;
+    width: 95vw;
+    aspect-ratio: 2.8 / 1;
     background-size: contain;
   }
 
   #start-btn {
-    width: clamp(70px, 22vw, 100px);
-    height: clamp(70px, 22vw, 100px);
+    width: clamp(40px, 16vw, 60px);
+    height: clamp(40px, 16vw, 60px);
+    top: 54%;
+    left: 50%;
   }
 
   .text {
     font-size: clamp(13px, 3.5vw, 18px);
     padding: clamp(15px, 5vw, 30px);
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 8px;
   }
 }
