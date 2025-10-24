@@ -79,18 +79,19 @@ body {
 }
 
 /* === Pergamin rozwinięty === */
+/* === Pergamin rozwinięty – pełny ekran === */
 .hidden {
   display: none !important;
 }
 
-/* === Pojawiający się pergamin === */
 #open-scroll {
   display: none;
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: url('parchment.png') center center / cover no-repeat;
+  background-color: #fdf8f1;
   justify-content: center;
   align-items: center;
   animation: fadeIn 1.5s ease forwards;
@@ -101,25 +102,41 @@ body {
   display: flex;
 }
 
-/* Tekst listu */
-#open-scroll .text {
+/* Tekst na środku pergaminu */
+#text {
   max-width: 80%;
   color: #2b1b00;
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
-  line-height: 1.6;
+  font-size: clamp(1rem, 2.3vw, 1.5rem);
+  line-height: 1.7;
   font-family: 'Times New Roman', serif;
   text-align: left;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   padding: 2rem;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  opacity: 0;
+  animation: textFadeIn 2s ease forwards 1.4s;
 }
 
-
-@keyframes unroll {
-  0% { transform: scaleY(0); opacity: 0; }
-  100% { transform: scaleY(1); opacity: 1; }
+/* Tekst pojawia się chwilę po pergaminie */
+@keyframes textFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+
+/* === Efekt 3D rozwinięcia zwoju === */
+@keyframes unroll3D {
+  0% { transform: rotateY(0deg) scale(1); opacity: 1; }
+  50% { transform: rotateY(90deg) scale(0.9); opacity: 0.6; }
+  100% { transform: rotateY(180deg) scale(0.85); opacity: 0; }
+}
+
+.scroll-rollout {
+  animation: unroll3D 1.5s ease-in-out forwards;
+  transform-origin: center;
+  perspective: 800px;
+}
+
 
 /* === Tekst listu === */
 .text {
