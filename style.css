@@ -174,7 +174,7 @@ button:hover {
     width: clamp(40px, 16vw, 60px);
     height: clamp(40px, 16vw, 60px);
     top: 54%;
-    left: 50%;
+    left: 55%;
   }
 
   .text {
