@@ -7,16 +7,18 @@ const btnReset = document.getElementById('reset');
 const elVoice = document.getElementById('voiceSel');
 const elRate = document.getElementById('rate');
 
-const LETTER_TEXT = `Drogi Przyjacielu,
-
-Piszę ten list, by przypomnieć Ci o sile spokoju.
-W świecie pełnym pośpiechu to właśnie cisza daje najwięcej odpowiedzi.
-
-Niech ten pergamin przypomina, że czasem warto zatrzymać się,
-odetchnąć i po prostu być.
-
-Z wyrazami szacunku,
-Autor`;
+const LETTER_TEXT = 
+Chciałbym ci powiedzieć co czuję, lecz moją domeną są czyny nie słowa 
+Chciałbym żeby był ktoś inny, ale każdy sie przy tobie chowa 
+Chciałbym żebyś nie czuła się już pogubiona. To normalne bo przecież każdy żyje pierwszy raz 
+Chciałbym żebyśmy żyli wiele razy, ale żyjemy tylko raz 
+Chciałbym żebyś znów popatrzyła na mnie swoimi pięknymi oczami 
+Chciałbym żeby znów cały świat stanął mi przed oczami 
+Chciałbym żebyś wiedziała że świat bez ciebie jest ciemnoszary 
+Chciałbym żebyś wiedziała że mam poważne zamiary 
+Chciałbym żebyś lepiej mnie poznała 
+Chciałbym żebyś wiedziała że dla mnie jesteś doskonała 
+Chciałbym...;
 
 let typingTimer=null,isTyping=false,paused=false,typedIndex=0;
 const TYPE_INTERVAL=30;
