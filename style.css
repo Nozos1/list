@@ -139,17 +139,23 @@ body {
 
 
 /* === Tekst listu === */
-.text {
-  padding: clamp(20px, 6vw, 50px);
-  font-size: clamp(14px, 2.2vw, 20px);
+#text {
+  max-width: 80%;
+  color: #2b1b00;
+  font-size: clamp(1rem, 2.3vw, 1.5rem);
   line-height: 1.7;
-  white-space: pre-wrap;
+  font-family: 'Times New Roman', serif;
+  text-align: left;
+  padding: 2rem;
   opacity: 0;
-  border-right: 2px solid rgba(42,27,15,0.8);
-  max-height: 80vh;
-  overflow-y: auto;
-  transition: opacity 0.8s ease;
+  animation: textFadeIn 2s ease forwards 1.4s;
+
+  /* usuwamy ramkę, tło i cień */
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
+
 
 .text::-webkit-scrollbar {
   width: 6px;
