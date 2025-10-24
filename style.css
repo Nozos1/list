@@ -31,27 +31,27 @@ body {
   align-items: center;
 }
 
-/* === Przycisk Start – idealne dopasowanie do pieczęci === */
 #start-btn {
   position: absolute;
   background: radial-gradient(circle, #b30000 30%, #700 80%);
   color: #fff;
   border: none;
   border-radius: 50%;
-  font-size: clamp(0.75rem, 2.4vw, 0.95rem);
   font-weight: bold;
+  text-align: center;
   cursor: pointer;
-  width: clamp(28px, 8vw, 45px);
-  height: clamp(28px, 8vw, 45px);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  animation: pulse 1.5s infinite;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
   z-index: 10;
-  top: 52%;
-  left: 57%;
-  transform: translate(-50%, -50%);
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
+  animation: pulse 1.5s infinite;
 }
+
+@keyframes pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
 
 /* delikatny efekt kliknięcia */
 #start-btn:active {

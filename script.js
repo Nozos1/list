@@ -115,5 +115,33 @@ function resetAll(){
   paused=false;
 }
 
+// === Dynamiczne dopasowanie przycisku Start do pieczęci ===
+window.addEventListener('load', positionStartButton);
+window.addEventListener('resize', positionStartButton);
+
+function positionStartButton() {
+  const scrollWrapper = document.getElementById('scroll-wrapper');
+  const btn = document.getElementById('start-btn');
+  if (!scrollWrapper || !btn) return;
+
+  // pobieramy rzeczywiste wymiary kontenera
+  const rect = scrollWrapper.getBoundingClientRect();
+
+  // ustawienia proporcji pozycji (można fine-tune’ować)
+  const leftRatio = 0.56; // 56% szerokości
+  const topRatio = 0.52;  // 52% wysokości
+  const sizeRatio = 0.1;  // 10% szerokości zwoju
+
+  const btnSize = rect.width * sizeRatio;
+
+  btn.style.width = `${btnSize}px`;
+  btn.style.height = `${btnSize}px`;
+  btn.style.fontSize = `${btnSize * 0.25}px`;
+  btn.style.left = `${rect.width * leftRatio}px`;
+  btn.style.top = `${rect.height * topRatio}px`;
+  btn.style.transform = 'translate(-50%, -50%)';
+}
+
+
 btnPause.addEventListener('click', ()=>paused?resumeAll():pauseAll());
 btnReset.addEventListener('click', resetAll);
