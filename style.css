@@ -1,8 +1,8 @@
-/* === Pergaminowy list – finalna wersja === */
+/* === RESET === */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -11,26 +11,26 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  font-family: 'Georgia', serif;
-  color: #2a1b0f;
   overflow: hidden;
+  font-family: "Times New Roman", serif;
 }
 
-/* === Zwinięty pergamin jako tło === */
+/* === ZWIJANY PERGAMIN === */
 #scroll-wrapper {
   position: relative;
   width: min(90vw, 900px);
   aspect-ratio: 3 / 1.3;
-  margin: auto;
   background-image: url('pngegg.png');
-  background-size: contain;
   background-repeat: no-repeat;
+  background-size: contain;
   background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5;
 }
 
+/* === PRZYCISK START === */
 #start-btn {
   position: absolute;
   background: radial-gradient(circle, #b30000 30%, #700 80%);
@@ -38,8 +38,8 @@ body {
   border: none;
   border-radius: 50%;
   font-weight: bold;
-  text-align: center;
   cursor: pointer;
+  text-align: center;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
   z-index: 10;
@@ -47,39 +47,51 @@ body {
   animation: pulse 1.5s infinite;
 }
 
+/* Efekt pulsowania */
 @keyframes pulse {
   0%, 100% { transform: translate(-50%, -50%) scale(1); }
   50% { transform: translate(-50%, -50%) scale(1.1); }
 }
 
-
-/* delikatny efekt kliknięcia */
-#start-btn:active {
-  transform: translate(-50%, -50%) scale(0.95);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+/* === Dynamiczne pozycjonowanie przycisku === */
+#start-btn {
+  top: 52%;
+  left: 56%;
+  transform: translate(-50%, -50%);
+  width: clamp(28px, 8vw, 45px);
+  height: clamp(28px, 8vw, 45px);
+  font-size: clamp(0.75rem, 2.4vw, 0.95rem);
 }
 
-/* Responsywność na telefonach */
+#start-btn:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+/* Telefon — precyzyjne dopasowanie */
 @media (max-width: 768px) {
   #start-btn {
+    top: 53%;
+    left: 50%;
     width: clamp(24px, 11vw, 36px);
     height: clamp(24px, 11vw, 36px);
-    top: 53%;
-    left: 51%;
     font-size: clamp(0.65rem, 3vw, 0.9rem);
   }
 }
 
-
-
-/* Efekt pulsowania */
-@keyframes pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.08); }
+/* === ANIMACJA ROZWINIĘCIA ZWOJU === */
+@keyframes unroll3D {
+  0% { transform: rotateY(0deg) scale(1); opacity: 1; }
+  50% { transform: rotateY(90deg) scale(0.9); opacity: 0.6; }
+  100% { transform: rotateY(180deg) scale(0.85); opacity: 0; }
 }
 
-/* === Pergamin rozwinięty === */
-/* === Pergamin rozwinięty – pełny ekran === */
+.scroll-rollout {
+  animation: unroll3D 1.5s ease-in-out forwards;
+  transform-origin: center;
+  perspective: 800px;
+}
+
+/* === PERGAMIN ROZWINIĘTY === */
 .hidden {
   display: none !important;
 }
@@ -102,43 +114,7 @@ body {
   display: flex;
 }
 
-/* Tekst na środku pergaminu */
-#text {
-  max-width: 80%;
-  color: #2b1b00;
-  font-size: clamp(1rem, 2.3vw, 1.5rem);
-  line-height: 1.7;
-  font-family: 'Times New Roman', serif;
-  text-align: left;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  opacity: 0;
-  animation: textFadeIn 2s ease forwards 1.4s;
-}
-
-/* Tekst pojawia się chwilę po pergaminie */
-@keyframes textFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* === Efekt 3D rozwinięcia zwoju === */
-@keyframes unroll3D {
-  0% { transform: rotateY(0deg) scale(1); opacity: 1; }
-  50% { transform: rotateY(90deg) scale(0.9); opacity: 0.6; }
-  100% { transform: rotateY(180deg) scale(0.85); opacity: 0; }
-}
-
-.scroll-rollout {
-  animation: unroll3D 1.5s ease-in-out forwards;
-  transform-origin: center;
-  perspective: 800px;
-}
-
-
-/* === Tekst listu === */
+/* === TEKST LISTU === */
 #text {
   max-width: 85%;
   color: #2b1b00;
@@ -150,7 +126,7 @@ body {
   opacity: 0;
   animation: textFadeIn 2s ease forwards 1.4s;
 
-  /* absolutnie żadnego tła ani obramowania */
+  /* ZERO TŁA, RAMKI, FILTRÓW */
   background: none !important;
   border: none !important;
   box-shadow: none !important;
@@ -158,82 +134,24 @@ body {
   -webkit-backdrop-filter: none !important;
 }
 
-
-/* === Panel sterowania (lektor, pauza itd.) === */
-.controls {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  background: rgba(255,255,255,0.85);
-  padding: 10px 16px;
-  border-radius: 10px;
-  backdrop-filter: blur(5px);
-}
-
-button, select, input[type="range"] {
-  border: 1px solid #8e7a5a;
-  background: #f6f0e5;
-  color: #2a1b0f;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-button:hover {
-  transform: translateY(-1px);
-}
-
-/* === Efekty === */
+/* === ANIMACJE === */
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* === Dodatkowa responsywność dla telefonów === */
-@media (max-width: 768px) {
-  #scroll-wrapper {
-    width: 95vw;
-    aspect-ratio: 2.8 / 1;
-    background-size: contain;
-  }
-
-  #start-btn {
-    width: clamp(40px, 16vw, 60px);
-    height: clamp(40px, 16vw, 60px);
-    top: 54%;
-    left: 60%;
-  }
-
-  
-
-  .controls {
-    flex-direction: column;
-    gap: 8px;
-  }
+@keyframes textFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* === Efekt 3D rozwinięcia zwoju === */
-@keyframes unroll3D {
-  0% {
-    transform: rotateY(0deg) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: rotateY(90deg) scale(0.9);
-    opacity: 0.6;
-  }
-  100% {
-    transform: rotateY(180deg) scale(0.85);
-    opacity: 0;
-  }
+/* === LEKKIE FALOWANIE PERGAMINU === */
+#open-scroll {
+  animation: fadeIn 1.5s ease forwards, wave 6s ease-in-out infinite alternate;
 }
 
-/* Klasa, która uruchamia animację */
-.scroll-rollout {
-  animation: unroll3D 1.5s ease-in-out forwards;
-  transform-origin: center;
-  perspective: 800px;
+@keyframes wave {
+  0% { transform: perspective(800px) rotateX(0deg) rotateY(0deg); }
+  50% { transform: perspective(800px) rotateX(2deg) rotateY(-2deg); }
+  100% { transform: perspective(800px) rotateX(-1deg) rotateY(1deg); }
 }
