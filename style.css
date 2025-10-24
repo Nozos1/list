@@ -88,8 +88,7 @@ body {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: #fff url('parchment.png') center/contain no-repeat;
-  background-color: #fef9f3;
+  background: #fff;
   animation: fadeIn 1s ease forwards;
 }
 
@@ -98,6 +97,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 
 .scroll {
   position: relative;
