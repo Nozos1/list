@@ -1,4 +1,3 @@
-/* ====== Treść listu ====== */
 const LETTER_TEXT = `Drogi Przyjacielu,
 
 Piszę ten list, by przypomnieć Ci o sile spokoju.
@@ -10,18 +9,9 @@ odetchnąć i po prostu być.
 Z wyrazami szacunku,
 Autor`;
 
-/* ====== Etap: rozwinięcie zwoju ====== */
 const startBtn = document.getElementById('start-btn');
 const rolled = document.getElementById('scroll-wrapper');
 const openScroll = document.getElementById('open-scroll');
-
-startBtn.addEventListener('click', () => {
-  rolled.classList.add('hidden');
-  openScroll.classList.remove('hidden');
-  setTimeout(() => startSequence(), 800);
-});
-
-/* ====== Efekt pisania ====== */
 const elText = document.getElementById('text');
 const btnPause = document.getElementById('pause');
 const btnReset = document.getElementById('reset');
@@ -30,6 +20,19 @@ const elRate = document.getElementById('rate');
 
 let typingTimer=null,isTyping=false,paused=false,typedIndex=0;
 const TYPE_INTERVAL=30;
+
+const scrollSound = new Audio('scroll.mp3');
+scrollSound.volume = 0.7;
+
+startBtn.addEventListener('click', () => {
+  scrollSound.currentTime = 0;
+  scrollSound.play();
+
+  rolled.classList.add('hidden');
+  openScroll.classList.remove('hidden');
+
+  setTimeout(() => startSequence(), 1200);
+});
 
 function typeNextChar(){
   if(paused)return;
@@ -43,7 +46,6 @@ function typeNextChar(){
   }
 }
 
-/* ====== Lektor ====== */
 const supportsTTS='speechSynthesis'in window&&'SpeechSynthesisUtterance'in window;
 let voices=[]; let currentUtterance=null;
 
@@ -80,7 +82,6 @@ function speakText(){
   window.speechSynthesis.speak(currentUtterance);
 }
 
-/* ====== Start pisania ====== */
 function startSequence(){
   resetAll();
   setTimeout(()=>{
@@ -91,7 +92,6 @@ function startSequence(){
   btnPause.disabled=false;
 }
 
-/* ====== Pauza / Wznów ====== */
 function pauseAll(){
   paused=true;
   if(typingTimer)clearTimeout(typingTimer);
@@ -105,7 +105,6 @@ function resumeAll(){
   btnPause.disabled=false;
 }
 
-/* ====== Reset ====== */
 function resetAll(){
   if(typingTimer)clearTimeout(typingTimer);
   elText.textContent='';
@@ -115,6 +114,5 @@ function resetAll(){
   typedIndex=0;paused=false;
 }
 
-/* ====== Eventy ====== */
 btnPause.addEventListener('click',()=>paused?resumeAll():pauseAll());
 btnReset.addEventListener('click',resetAll);
