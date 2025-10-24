@@ -160,10 +160,7 @@ body {
 .text::-webkit-scrollbar {
   width: 6px;
 }
-.text::-webkit-scrollbar-thumb {
-  background: rgba(42,27,15,0.3);
-  border-radius: 10px;
-}
+
 
 .caret-off {
   border-right-color: transparent;
