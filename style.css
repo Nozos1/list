@@ -33,6 +33,7 @@ body {
 
 /* === Przycisk Start – automatyczne dopasowanie === */
 /* === Przycisk Start – precyzyjnie dopasowany do pieczęci === */
+/* === Przycisk Start – precyzyjnie dopasowany do pieczęci === */
 #start-btn {
   position: absolute;
   background: radial-gradient(circle, #b30000 30%, #700 80%);
