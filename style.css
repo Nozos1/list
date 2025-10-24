@@ -117,3 +117,19 @@ body {
   from{opacity:0;transform:translateY(10px);}
   to{opacity:1;transform:translateY(0);}
 }
+
+/* === DOPASOWANIE POZYCJI PRZYCISKU NA TELEFONIE === */
+@media (max-width: 768px) {
+  #scroll-wrapper {
+    width: 95vw;
+    aspect-ratio: 3 / 1.4; /* delikatna korekta proporcji */
+  }
+
+  #start-btn {
+    top: 54%;
+    left: 53.5%;
+    width: clamp(26px, 10vw, 38px);
+    height: clamp(26px, 10vw, 38px);
+    font-size: clamp(0.7rem, 3vw, 0.9rem);
+  }
+}
