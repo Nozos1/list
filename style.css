@@ -1,157 +1,119 @@
 /* === RESET === */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+* {margin:0;padding:0;box-sizing:border-box;}
 body {
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow: hidden;
-  font-family: "Times New Roman", serif;
+  background:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  overflow:hidden;
+  font-family:'Crimson Text', serif;
 }
 
 /* === ZWIJANY PERGAMIN === */
 #scroll-wrapper {
-  position: relative;
-  width: min(90vw, 900px);
-  aspect-ratio: 3 / 1.3;
-  background-image: url('pngegg.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 5;
+  position:relative;
+  width:min(90vw,900px);
+  aspect-ratio:3/1.3;
+  background:url('pngegg.png') center/contain no-repeat;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:5;
 }
 
 /* === PRZYCISK START === */
 #start-btn {
-  position: absolute;
-  background: radial-gradient(circle, #b30000 30%, #700 80%);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-  transition: all 0.25s ease;
-  animation: pulse 1.5s infinite;
+  position:absolute;
+  background:radial-gradient(circle,#b30000 30%,#700 80%);
+  color:#fff;
+  border:none;
+  border-radius:50%;
+  font-weight:bold;
+  cursor:pointer;
+  text-align:center;
+  text-shadow:0 1px 3px rgba(0,0,0,0.3);
+  box-shadow:0 3px 8px rgba(0,0,0,0.3);
+  transition:all .25s ease;
+  animation:pulse 1.5s infinite;
+  top:52%;
+  left:56%;
+  transform:translate(-50%,-50%);
+  width:clamp(28px,8vw,45px);
+  height:clamp(28px,8vw,45px);
+  font-size:clamp(.75rem,2.4vw,.95rem);
+  z-index:9999;
+  pointer-events:auto;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
 }
-
-/* Efekt pulsowania */
 @keyframes pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.1); }
+  0%,100%{transform:translate(-50%,-50%) scale(1);}
+  50%{transform:translate(-50%,-50%) scale(1.1);}
 }
-
-/* === Dynamiczne pozycjonowanie przycisku === */
-#start-btn {
-  top: 52%;
-  left: 56%;
-  transform: translate(-50%, -50%);
-  width: clamp(28px, 8vw, 45px);
-  height: clamp(28px, 8vw, 45px);
-  font-size: clamp(0.75rem, 2.4vw, 0.95rem);
-}
-
-#start-btn:active {
-  transform: translate(-50%, -50%) scale(0.95);
-}
-
-/* Telefon — precyzyjne dopasowanie */
-@media (max-width: 768px) {
-  #start-btn {
-    top: 53%;
-    left: 50%;
-    width: clamp(24px, 11vw, 36px);
-    height: clamp(24px, 11vw, 36px);
-    font-size: clamp(0.65rem, 3vw, 0.9rem);
+#start-btn:active {transform:translate(-50%,-50%) scale(.95);}
+@media(max-width:768px){
+  #start-btn{
+    top:53%;left:50%;
+    width:clamp(24px,11vw,36px);
+    height:clamp(24px,11vw,36px);
+    font-size:clamp(.65rem,3vw,.9rem);
   }
 }
 
-/* === ANIMACJA ROZWINIĘCIA ZWOJU === */
+/* === ANIMACJA ZWIJANIA === */
 @keyframes unroll3D {
-  0% { transform: rotateY(0deg) scale(1); opacity: 1; }
-  50% { transform: rotateY(90deg) scale(0.9); opacity: 0.6; }
-  100% { transform: rotateY(180deg) scale(0.85); opacity: 0; }
+  0%{transform:rotateY(0deg) scale(1);opacity:1;}
+  50%{transform:rotateY(90deg) scale(0.9);opacity:0.6;}
+  100%{transform:rotateY(180deg) scale(0.85);opacity:0;}
 }
-
 .scroll-rollout {
-  animation: unroll3D 1.5s ease-in-out forwards;
-  transform-origin: center;
-  perspective: 800px;
+  animation:unroll3D 1.5s ease-in-out forwards;
+  transform-origin:center;
+  perspective:800px;
 }
 
-/* === PERGAMIN ROZWINIĘTY === */
-.hidden {
-  display: none !important;
-}
-
+/* === ROZWINIĘTY PERGAMIN === */
+.hidden{display:none!important;}
 #open-scroll {
-  display: none;
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: url('parchment.png') center center / cover no-repeat;
-  background-color: #fdf8f1;
-  justify-content: center;
-  align-items: center;
-  animation: fadeIn 1.5s ease forwards;
-  z-index: 50;
+  display:none;
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  background:url('pergamin.png') center/cover no-repeat;
+  background-color:#fdf8f1;
+  justify-content:center;
+  align-items:center;
+  animation:fadeIn 1.5s ease forwards, wave 6s ease-in-out infinite alternate;
+  z-index:50;
 }
+#open-scroll.active{display:flex;}
 
-#open-scroll.active {
-  display: flex;
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes wave{
+  0%{transform:perspective(800px) rotateX(0deg) rotateY(0deg);}
+  50%{transform:perspective(800px) rotateX(2deg) rotateY(-2deg);}
+  100%{transform:perspective(800px) rotateX(-1deg) rotateY(1deg);}
 }
 
 /* === TEKST LISTU === */
 #text {
-  max-width: 85%;
-  color: #2b1b00;
-  font-size: clamp(1rem, 2.3vw, 1.5rem);
-  line-height: 1.7;
-  font-family: 'Times New Roman', serif;
-  text-align: left;
-  padding: 2rem;
-  opacity: 0;
-  animation: textFadeIn 2s ease forwards 1.4s;
-
-  /* ZERO TŁA, RAMKI, FILTRÓW */
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  max-width:80%;
+  color:#2b1b00;
+  font-size:clamp(1rem,2.3vw,1.5rem);
+  line-height:1.6;
+  text-align:left;
+  padding:2rem;
+  opacity:0;
+  animation:textFadeIn 3s ease forwards 1.4s;
+  background:none!important;
+  border:none!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
 }
-
-/* === ANIMACJE === */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes textFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* === LEKKIE FALOWANIE PERGAMINU === */
-#open-scroll {
-  animation: fadeIn 1.5s ease forwards, wave 6s ease-in-out infinite alternate;
-}
-
-@keyframes wave {
-  0% { transform: perspective(800px) rotateX(0deg) rotateY(0deg); }
-  50% { transform: perspective(800px) rotateX(2deg) rotateY(-2deg); }
-  100% { transform: perspective(800px) rotateX(-1deg) rotateY(1deg); }
+@keyframes textFadeIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
 }

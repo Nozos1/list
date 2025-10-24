@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Pergaminowy List – Animacja</title>
+  <title>Pergaminowy List</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Elegancka klasyczna czcionka -->
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -13,11 +15,12 @@
     <button id="start-btn">Start</button>
   </div>
 
-  <!-- Rozwinięty pergamin – pełny ekran -->
+  <!-- Rozwinięty pergamin -->
   <div id="open-scroll" class="hidden">
-    <div id="text" class="text"></div>
+    <div id="text"></div>
   </div>
 
+  <audio id="scrollSound" src="scroll.mp3" preload="auto"></audio>
   <script src="script.js" defer></script>
 </body>
 </html>
