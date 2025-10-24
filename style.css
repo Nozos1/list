@@ -88,7 +88,7 @@ body {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: #fff url('pergamin.png') center/contain no-repeat;
+  background: #fff url('parchment.png') center/contain no-repeat;
   background-color: #fef9f3;
   animation: fadeIn 1s ease forwards;
 }
@@ -197,4 +197,27 @@ button:hover {
     flex-direction: column;
     gap: 8px;
   }
+}
+
+/* === Efekt 3D rozwinięcia zwoju === */
+@keyframes unroll3D {
+  0% {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: rotateY(90deg) scale(0.9);
+    opacity: 0.6;
+  }
+  100% {
+    transform: rotateY(180deg) scale(0.85);
+    opacity: 0;
+  }
+}
+
+/* Klasa, która uruchamia animację */
+.scroll-rollout {
+  animation: unroll3D 1.5s ease-in-out forwards;
+  transform-origin: center;
+  perspective: 800px;
 }

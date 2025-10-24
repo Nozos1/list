@@ -25,16 +25,22 @@ scrollSound.volume = 0.8;
 
 /* kliknięcie START */
 startBtn.addEventListener('click', () => {
-  // Dźwięk + ukrycie zwoju
+  // dźwięk rozwinięcia
   scrollSound.currentTime = 0;
   scrollSound.play();
 
-  scrollWrapper.classList.add('hidden');
-  openScroll.classList.remove('hidden');
+  // uruchom animację rozwijania zwoju
+  scrollWrapper.classList.add('scroll-rollout');
 
-  // Poczekaj chwilę na animację
-  setTimeout(startSequence, 1200);
+  // po 1.5 sekundy (koniec animacji) pokaż list
+  setTimeout(() => {
+    scrollWrapper.classList.add('hidden');           // ukryj zwój
+    openScroll.classList.remove('hidden');           // pokaż rozwinięty pergamin
+    openScroll.classList.add('active');
+    startSequence();                                 // rozpocznij pisanie + lektor
+  }, 1500);
 });
+
 
 /* Efekt pisania */
 function typeNextChar(){
