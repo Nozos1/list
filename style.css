@@ -207,10 +207,7 @@ button:hover {
     left: 60%;
   }
 
-  .text {
-    font-size: clamp(13px, 3.5vw, 18px);
-    padding: clamp(15px, 5vw, 30px);
-  }
+  
 
   .controls {
     flex-direction: column;
