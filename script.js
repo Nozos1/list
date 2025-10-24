@@ -4,7 +4,7 @@ const openScroll = document.getElementById('open-scroll');
 const elText = document.getElementById('text');
 const scrollSound = document.getElementById('scrollSound');
 
-const TYPE_INTERVAL = 50; // powolne i klimatyczne
+const TYPE_INTERVAL = 100; // powolne i klimatyczne
 let typedIndex = 0;
 let typingTimer;
 let paused = false;
