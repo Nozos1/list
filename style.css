@@ -83,32 +83,38 @@ body {
   display: none !important;
 }
 
+/* === Pojawiający się pergamin === */
 #open-scroll {
   display: none;
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  background: #fff;
-  animation: fadeIn 1s ease forwards;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: url('parchment.png') center center / cover no-repeat;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 1.5s ease forwards;
+  z-index: 50;
 }
 
 #open-scroll.active {
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-
-.scroll {
-  position: relative;
-  width: 90vw;
-  max-width: 900px;
-  aspect-ratio: 3/4;
-  background: url('pergamin.png') center/cover no-repeat;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-  animation: unroll 1.4s ease-out forwards;
+/* Tekst listu */
+#open-scroll .text {
+  max-width: 80%;
+  color: #2b1b00;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  line-height: 1.6;
+  font-family: 'Times New Roman', serif;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
 }
+
 
 @keyframes unroll {
   0% { transform: scaleY(0); opacity: 0; }
