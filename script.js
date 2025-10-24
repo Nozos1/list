@@ -7,8 +7,8 @@ const btnReset = document.getElementById('reset');
 const elVoice = document.getElementById('voiceSel');
 const elRate = document.getElementById('rate');
 
-const LETTER_TEXT = 
-Chciałbym ci powiedzieć co czuję, lecz moją domeną są czyny nie słowa 
+const LETTER_TEXT = `
+Chciałbym ci powiedzieć co czuję, lecz moją domeną są czyny nie słowa </br> 
 Chciałbym żeby był ktoś inny, ale każdy sie przy tobie chowa 
 Chciałbym żebyś nie czuła się już pogubiona. To normalne bo przecież każdy żyje pierwszy raz 
 Chciałbym żebyśmy żyli wiele razy, ale żyjemy tylko raz 
@@ -18,7 +18,8 @@ Chciałbym żebyś wiedziała że świat bez ciebie jest ciemnoszary
 Chciałbym żebyś wiedziała że mam poważne zamiary 
 Chciałbym żebyś lepiej mnie poznała 
 Chciałbym żebyś wiedziała że dla mnie jesteś doskonała 
-Chciałbym...;
+Chciałbym...
+`;
 
 let typingTimer=null,isTyping=false,paused=false,typedIndex=0;
 const TYPE_INTERVAL=30;
@@ -45,16 +46,25 @@ startBtn.addEventListener('click', () => {
 
 
 /* Efekt pisania */
-function typeNextChar(){
-  if(paused)return;
-  if(typedIndex <= LETTER_TEXT.length){
-    elText.textContent = LETTER_TEXT.slice(0, typedIndex);
+function typeNextChar() {
+  if (paused) return;
+  if (typedIndex <= LETTER_TEXT.length) {
+    // bierzemy aktualny fragment tekstu
+    let partial = LETTER_TEXT.slice(0, typedIndex);
+
+    // każde "Chciałbym" zaczyna nowy akapit
+    let formatted = partial.replace(/Chciałbym/gi, "<br>Chciałbym");
+
+    // wyświetlamy z interpretacją HTML
+    elText.innerHTML = formatted;
+
     typedIndex++;
     typingTimer = setTimeout(typeNextChar, TYPE_INTERVAL);
   } else {
-    elText.classList.add('caret-off');
+    elText.classList.add("caret-off");
   }
 }
+
 
 /* Lektor */
 const supportsTTS = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
