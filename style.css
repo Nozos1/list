@@ -1,4 +1,4 @@
-/* === Pergaminowy list – pełna wersja z responsywnością === */
+/* === Pergaminowy list – wersja z background cover (pełna responsywność) === */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -16,45 +16,23 @@ body {
   overflow: hidden;
 }
 
-/* === Etap 1: Zwinięty pergamin === */
+/* === Etap 1: Zwinięty pergamin jako tło === */
 #scroll-wrapper {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 90vw;
+  max-width: 900px;
+  aspect-ratio: 16/9; /* utrzymuje proporcje */
+  margin: auto;
+  background-image: url('pngegg.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  background: #fff;
 }
 
-#rolled {
-  max-height: 80vh;                /* dopasowanie do ekranu */
-  width: auto;
-  height: auto;
-  transform: rotate(90deg) scale(0.8);
-  transform-origin: center center;
-  object-fit: contain;
-  filter: drop-shadow(0 5px 20px rgba(0,0,0,0.3));
-  transition: transform 0.3s ease;
-}
-
-/* Mniejsze ekrany – zmniejszamy zwój */
-@media (max-width: 768px) {
-  #rolled {
-    max-height: 60vh;
-    transform: rotate(90deg) scale(0.6);
-  }
-}
-
-@media (max-width: 480px) {
-  #rolled {
-    max-height: 55vh;
-    transform: rotate(90deg) scale(0.5);
-  }
-}
-
-/* === Przycisk Start (pieczęć) === */
+/* Przycisk Start */
 #start-btn {
   position: absolute;
   background: radial-gradient(circle, #b30000 30%, #700 80%);
@@ -166,13 +144,20 @@ button:hover {
 }
 
 /* === Dodatkowa responsywność === */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  #scroll-wrapper {
+    width: 100vw;
+    aspect-ratio: 3/4;
+    background-size: contain;
+  }
+
+  #start-btn {
+    width: clamp(70px, 22vw, 100px);
+    height: clamp(70px, 22vw, 100px);
+  }
+
   .text {
     font-size: clamp(13px, 3.5vw, 18px);
     padding: clamp(15px, 5vw, 30px);
-  }
-  .controls {
-    flex-direction: column;
-    gap: 8px;
   }
 }
