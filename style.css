@@ -152,16 +152,6 @@ body {
 
 }
 
-
-.text::-webkit-scrollbar {
-  width: 6px;
-}
-
-
-.caret-off {
-  border-right-color: transparent;
-}
-
 /* === Panel sterowania (lektor, pauza itd.) === */
 .controls {
   margin-top: 10px;
