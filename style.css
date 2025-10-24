@@ -32,34 +32,45 @@ body {
 }
 
 /* === Przycisk Start – automatyczne dopasowanie === */
+/* === Przycisk Start – precyzyjnie dopasowany do pieczęci === */
 #start-btn {
   position: absolute;
   background: radial-gradient(circle, #b30000 30%, #700 80%);
   color: #fff;
   border: none;
   border-radius: 50%;
-  font-size: clamp(0.9rem, 3.2vw, 1.2rem);
+  font-size: clamp(0.8rem, 2.8vw, 1.1rem);
   font-weight: bold;
   cursor: pointer;
-  width: clamp(45px, 12vw, 70px);
-  height: clamp(45px, 12vw, 70px);
+  width: clamp(38px, 10vw, 60px);
+  height: clamp(38px, 10vw, 60px);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   animation: pulse 1.5s infinite;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
   z-index: 10;
-
-  /* Pozycja pieczęci proporcjonalna do szerokości i wysokości */
   top: 52%;
   left: 55%;
   transform: translate(-50%, -50%);
   transition: all 0.2s ease;
 }
 
-/* delikatny efekt kliknięcia */
+/* Subtelny efekt wciśnięcia */
 #start-btn:active {
   transform: translate(-50%, -50%) scale(0.95);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+/* Responsywne dopasowanie na telefonach */
+@media (max-width: 768px) {
+  #start-btn {
+    width: clamp(30px, 14vw, 45px);
+    height: clamp(30px, 14vw, 45px);
+    top: 53%;
+    left: 50%;
+    font-size: clamp(0.7rem, 3vw, 1rem);
+  }
+}
+
 
 /* Efekt pulsowania */
 @keyframes pulse {
