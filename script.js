@@ -1,3 +1,12 @@
+const startBtn = document.getElementById('start-btn');
+const scrollWrapper = document.getElementById('scroll-wrapper');
+const openScroll = document.getElementById('open-scroll');
+const elText = document.getElementById('text');
+const btnPause = document.getElementById('pause');
+const btnReset = document.getElementById('reset');
+const elVoice = document.getElementById('voiceSel');
+const elRate = document.getElementById('rate');
+
 const LETTER_TEXT = `Drogi Przyjacielu,
 
 Piszę ten list, by przypomnieć Ci o sile spokoju.
@@ -9,110 +18,102 @@ odetchnąć i po prostu być.
 Z wyrazami szacunku,
 Autor`;
 
-const startBtn = document.getElementById('start-btn');
-const rolled = document.getElementById('scroll-wrapper');
-const openScroll = document.getElementById('open-scroll');
-const elText = document.getElementById('text');
-const btnPause = document.getElementById('pause');
-const btnReset = document.getElementById('reset');
-const elVoice = document.getElementById('voiceSel');
-const elRate = document.getElementById('rate');
-
 let typingTimer=null,isTyping=false,paused=false,typedIndex=0;
 const TYPE_INTERVAL=30;
-
 const scrollSound = new Audio('scroll.mp3');
-scrollSound.volume = 0.7;
+scrollSound.volume = 0.8;
 
+/* kliknięcie START */
 startBtn.addEventListener('click', () => {
+  // Dźwięk + ukrycie zwoju
   scrollSound.currentTime = 0;
   scrollSound.play();
 
-  rolled.classList.add('hidden');
+  scrollWrapper.classList.add('hidden');
   openScroll.classList.remove('hidden');
 
-  setTimeout(() => startSequence(), 1200);
+  // Poczekaj chwilę na animację
+  setTimeout(startSequence, 1200);
 });
 
+/* Efekt pisania */
 function typeNextChar(){
   if(paused)return;
-  if(typedIndex<=LETTER_TEXT.length){
-    elText.textContent=LETTER_TEXT.slice(0,typedIndex);
+  if(typedIndex <= LETTER_TEXT.length){
+    elText.textContent = LETTER_TEXT.slice(0, typedIndex);
     typedIndex++;
-    typingTimer=setTimeout(typeNextChar,TYPE_INTERVAL);
-  }else{
+    typingTimer = setTimeout(typeNextChar, TYPE_INTERVAL);
+  } else {
     elText.classList.add('caret-off');
-    isTyping=false;
   }
 }
 
-const supportsTTS='speechSynthesis'in window&&'SpeechSynthesisUtterance'in window;
-let voices=[]; let currentUtterance=null;
+/* Lektor */
+const supportsTTS = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+let voices=[], currentUtterance=null;
 
 function populateVoices(){
   if(!supportsTTS)return;
-  voices=window.speechSynthesis.getVoices();
-  const pl=voices.filter(v=>(v.lang||'').toLowerCase().startsWith('pl'));
-  const rest=voices.filter(v=>!(v.lang||'').toLowerCase().startsWith('pl'));
-  const sorted=[...pl,...rest];
+  voices = speechSynthesis.getVoices();
+  const pl = voices.filter(v => (v.lang||'').toLowerCase().startsWith('pl'));
+  const sorted = [...pl, ...voices.filter(v => !pl.includes(v))];
   elVoice.innerHTML='';
   sorted.forEach(v=>{
     const o=document.createElement('option');
     o.value=v.name;
-    o.textContent=`${v.name} ${v.lang?'· '+v.lang:''}${pl.includes(v)?' (PL)':''}`;
+    o.textContent=`${v.name} ${v.lang?'· '+v.lang:''}`;
     elVoice.appendChild(o);
   });
-  const pref=sorted.find(v=>(v.lang||'').toLowerCase().startsWith('pl'));
-  if(pref)elVoice.value=pref.name;
+  const pref = sorted.find(v=>(v.lang||'').toLowerCase().startsWith('pl'));
+  if(pref) elVoice.value=pref.name;
 }
 if(supportsTTS){
   populateVoices();
-  window.speechSynthesis.onvoiceschanged=populateVoices;
+  speechSynthesis.onvoiceschanged=populateVoices;
 }
 
 function speakText(){
   if(!supportsTTS)return;
-  window.speechSynthesis.cancel();
+  speechSynthesis.cancel();
   currentUtterance=new SpeechSynthesisUtterance(LETTER_TEXT);
   currentUtterance.rate=parseFloat(elRate.value||'1');
   const v=voices.find(v=>v.name===elVoice.value)||
            voices.find(v=>(v.lang||'').toLowerCase().startsWith('pl'))||
            voices[0];
-  if(v)currentUtterance.voice=v;
-  window.speechSynthesis.speak(currentUtterance);
+  if(v) currentUtterance.voice=v;
+  speechSynthesis.speak(currentUtterance);
 }
 
+/* Sekwencja startowa */
 function startSequence(){
-  resetAll();
-  setTimeout(()=>{
-    elText.style.opacity='1';
-    typeNextChar();
-    speakText();
-  }, 1500);
+  elText.style.opacity='1';
+  typeNextChar();
+  speakText();
   btnPause.disabled=false;
 }
 
+/* Pauza i wznawianie */
 function pauseAll(){
   paused=true;
   if(typingTimer)clearTimeout(typingTimer);
-  if(supportsTTS)window.speechSynthesis.pause();
+  if(supportsTTS)speechSynthesis.pause();
   btnPause.disabled=true;
 }
 function resumeAll(){
   paused=false;
   typeNextChar();
-  if(supportsTTS)window.speechSynthesis.resume();
+  if(supportsTTS)speechSynthesis.resume();
   btnPause.disabled=false;
 }
-
 function resetAll(){
   if(typingTimer)clearTimeout(typingTimer);
   elText.textContent='';
   elText.classList.remove('caret-off');
   elText.style.opacity='0';
-  if(supportsTTS)window.speechSynthesis.cancel();
-  typedIndex=0;paused=false;
+  if(supportsTTS)speechSynthesis.cancel();
+  typedIndex=0;
+  paused=false;
 }
 
-btnPause.addEventListener('click',()=>paused?resumeAll():pauseAll());
-btnReset.addEventListener('click',resetAll);
+btnPause.addEventListener('click', ()=>paused?resumeAll():pauseAll());
+btnReset.addEventListener('click', resetAll);

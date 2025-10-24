@@ -60,7 +60,7 @@ body {
 
 /* === Etap 2: Rozwinięty pergamin === */
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 #open-scroll {
