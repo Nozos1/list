@@ -150,10 +150,6 @@ body {
   opacity: 0;
   animation: textFadeIn 2s ease forwards 1.4s;
 
-  /* usuwamy ramkę, tło i cień */
-  background: transparent;
-  border: none;
-  box-shadow: none;
 }
 
 
