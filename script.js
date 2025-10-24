@@ -127,20 +127,25 @@ function positionStartButton() {
   // pobieramy rzeczywiste wymiary kontenera
   const rect = scrollWrapper.getBoundingClientRect();
 
-  // ustawienia proporcji pozycji (można fine-tune’ować)
-  const leftRatio = 0.56; // 56% szerokości
-  const topRatio = 0.52;  // 52% wysokości
-  const sizeRatio = 0.1;  // 10% szerokości zwoju
+  // proporcje położenia pieczęci względem obrazu
+  const leftRatio = 0.555; // 55,5% szerokości (pozycja pieczęci)
+  const topRatio = 0.52;   // 52% wysokości
+  const sizeRatio = 0.09;  // 9% szerokości zwoju = rozmiar przycisku
 
+  // obliczenia
   const btnSize = rect.width * sizeRatio;
+  const btnX = rect.width * leftRatio;
+  const btnY = rect.height * topRatio;
 
+  // przypisz styl
   btn.style.width = `${btnSize}px`;
   btn.style.height = `${btnSize}px`;
   btn.style.fontSize = `${btnSize * 0.25}px`;
-  btn.style.left = `${rect.width * leftRatio}px`;
-  btn.style.top = `${rect.height * topRatio}px`;
+  btn.style.left = `${btnX}px`;
+  btn.style.top = `${btnY}px`;
   btn.style.transform = 'translate(-50%, -50%)';
 }
+
 
 
 btnPause.addEventListener('click', ()=>paused?resumeAll():pauseAll());
