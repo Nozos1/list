@@ -12,7 +12,7 @@ let paused = false;
 const LETTER_TEXT = `
 Droga Magdo,
 
-Chciałbym ci powiedzieć co czuję, lecz moją domeną są czyny nie słowa 
+Chciałbym ci powiedzieć co czuję, lecz moją stroną są czyny nie słowa 
 Chciałbym żeby był ktoś inny, ale każdy sie przy tobie chowa 
 Chciałbym żebyś nie czuła się już pogubiona. To normalne bo przecież każdy żyje pierwszy raz 
 Chciałbym żebyśmy żyli wiele razy, ale żyjemy tylko raz 
